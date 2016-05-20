@@ -1,0 +1,51 @@
+{
+    "name": "javihgil/composer-ci-tools",
+    "description": "Library to integrate some testing and developing tools into composer scripts",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Jhg\\ComposerCiTools\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jhg\\ComposerCiTools\\Tests\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/process": "~2.3|~3.0",
+        "symfony/filesystem": "~2.3|~3.0",
+        "symfony/options-resolver": "~2.3|~3.0"
+    },
+    "require-dev": {
+        "composer/composer": "1.1.*",
+        "symfony/finder": "~2.3|~3.0",
+        "mockery/mockery": "~0.9",
+        "phpunit/phpunit": "4.8.*"
+    },
+    "config": {
+        "process-timeout": 0,
+        "bin-dir": "vendor/bin"
+    },
+    "extra": {
+        "ci-tools": {
+            "global": {
+                "report-results-path": "target/report",
+                "test-results-path": "target/test",
+                "log-format": "  <fg=cyan>> %s</>"
+            }
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::preCommit"
+        ],
+        "pre-commit-hook": [
+            "@composer validate"
+        ]
+    }
+}
