@@ -20,7 +20,8 @@ This is an example composer.json:
                 "Jhg\\ComposerCiTools\\GitHooksInstaller::preCommit"
             ],
             "pre-commit-hook": [
-                "@composer validate"
+                "@composer validate",
+                "Jhg\\ComposerCiTools\\SecurityChecker::check"
             ]
         }
     }
