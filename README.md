@@ -29,6 +29,7 @@ This is an example composer.json:
 
 - [Global configuration](docs/01-global-configuration.md)
 - [Git Hooks Installer](docs/02-git-hooks-installer.md)
+- [SecurityChecker](docs/03-security-checker.md)
 
 ## Note for Windows users
 
