@@ -26,10 +26,14 @@
         "symfony/finder": "~2.3|~3.0",
         "mockery/mockery": "~0.9",
         "phpunit/phpunit": "4.8.*",
-        "sensiolabs/security-checker": "~3.0"
+        "sensiolabs/security-checker": "~3.0",
+        "asm89/twig-lint": "dev-master",
+        "hexmedia/yaml-linter": "0.1"
     },
     "suggest": {
-        "sensiolabs/security-checker" : "Check for reported vulnerabilities in project dependencies"
+        "sensiolabs/security-checker" : "Check for reported vulnerabilities in project dependencies",
+        "hexmedia/yaml-linter": "Yaml lint for no symfony projects",
+        "asm89/twig-lint": "Twig lint for no symfony projects"
     },
     "config": {
         "process-timeout": 0,
@@ -50,10 +54,12 @@
         ],
         "pre-commit-hook": [
             "@composer validate",
+            "Jhg\\ComposerCiTools\\Lint::phpLazy",
             "Jhg\\ComposerCiTools\\SecurityChecker::check"
         ],
         "test": [
             "@composer validate",
+            "Jhg\\ComposerCiTools\\Lint::php",
             "Jhg\\ComposerCiTools\\SecurityChecker::check"
         ]
     }

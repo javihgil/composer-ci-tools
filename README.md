@@ -21,6 +21,7 @@ This is an example composer.json:
             ],
             "pre-commit-hook": [
                 "@composer validate",
+                "Jhg\\ComposerCiTools\\Lint::phpLazy",
                 "Jhg\\ComposerCiTools\\SecurityChecker::check"
             ]
         }
