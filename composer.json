@@ -45,17 +45,25 @@
                 "report-results-path": "target/report",
                 "test-results-path": "target/test",
                 "log-format": "  <fg=cyan>> %s</>"
+            },
+            "git": {
+                "commit-msg-regex": "/^[a-z\\s\\-0-9\\.]{20,}$/i",
+                "commit-msg-error": "The commit message must be at least 20 characters long"
             }
         }
     },
     "scripts": {
         "post-install-cmd": [
-            "Jhg\\ComposerCiTools\\GitHooksInstaller::preCommit"
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::preCommit",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::commitMsg"
         ],
         "pre-commit-hook": [
             "@composer validate",
             "Jhg\\ComposerCiTools\\Lint::phpLazy",
             "Jhg\\ComposerCiTools\\SecurityChecker::check"
+        ],
+        "commit-msg-hook": [
+            "Jhg\\ComposerCiTools\\Git::commitMsgRegex"
         ],
         "test": [
             "@composer validate",
