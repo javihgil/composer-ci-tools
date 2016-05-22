@@ -28,12 +28,18 @@
         "phpunit/phpunit": "4.8.*",
         "sensiolabs/security-checker": "~3.0",
         "asm89/twig-lint": "dev-master",
-        "hexmedia/yaml-linter": "0.1"
+        "hexmedia/yaml-linter": "0.1",
+        "squizlabs/PHP_CodeSniffer": "~2.0",
+        "leaphub/phpcs-symfony2-standard": "~2.0",
+        "fabpot/php-cs-fixer": "~1.9"
     },
     "suggest": {
         "sensiolabs/security-checker" : "Check for reported vulnerabilities in project dependencies",
         "hexmedia/yaml-linter": "Yaml lint for no symfony projects",
-        "asm89/twig-lint": "Twig lint for no symfony projects"
+        "asm89/twig-lint": "Twig lint for no symfony projects",
+        "squizlabs/PHP_CodeSniffer" : "Code style checks",
+        "leaphub/phpcs-symfony2-standard" : "Symfony2 standard for PHP_CodeSniffer",
+        "fabpot/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/"
     },
     "config": {
         "process-timeout": 0,
@@ -45,6 +51,10 @@
                 "report-results-path": "target/report",
                 "test-results-path": "target/test",
                 "log-format": "  <fg=cyan>> %s</>"
+            },
+            "phpcs" : {
+                "standard": "vendor/leaphub/phpcs-symfony2-standard/leaphub/phpcs/Symfony2/",
+                "exclude": ["vendor", "target"]
             },
             "git": {
                 "commit-msg-regex": "/^[a-z\\s\\-0-9\\.]{20,}$/i",
@@ -59,6 +69,8 @@
         ],
         "pre-commit-hook": [
             "@composer validate",
+            "Jhg\\ComposerCiTools\\PhpCsFixer::fix",
+            "Jhg\\ComposerCiTools\\Git::addAll",
             "Jhg\\ComposerCiTools\\Lint::phpLazy",
             "Jhg\\ComposerCiTools\\SecurityChecker::check"
         ],
@@ -69,6 +81,10 @@
             "@composer validate",
             "Jhg\\ComposerCiTools\\Lint::php",
             "Jhg\\ComposerCiTools\\SecurityChecker::check"
+        ],
+        "report": [
+            "@composer install",
+            "Jhg\\ComposerCiTools\\PhpCs::report"
         ]
     }
 }
