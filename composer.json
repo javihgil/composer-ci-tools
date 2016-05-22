@@ -31,7 +31,8 @@
         "hexmedia/yaml-linter": "0.1",
         "squizlabs/PHP_CodeSniffer": "~2.0",
         "leaphub/phpcs-symfony2-standard": "~2.0",
-        "fabpot/php-cs-fixer": "~1.9"
+        "fabpot/php-cs-fixer": "~1.9",
+        "sebastian/phpcpd": "2.0.*"
     },
     "suggest": {
         "sensiolabs/security-checker" : "Check for reported vulnerabilities in project dependencies",
@@ -39,7 +40,8 @@
         "asm89/twig-lint": "Twig lint for no symfony projects",
         "squizlabs/PHP_CodeSniffer" : "Code style checks",
         "leaphub/phpcs-symfony2-standard" : "Symfony2 standard for PHP_CodeSniffer",
-        "fabpot/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/"
+        "fabpot/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/",
+        "sebastian/phpcpd" : "Copy paste detector"
     },
     "config": {
         "process-timeout": 0,
@@ -84,6 +86,7 @@
         ],
         "report": [
             "@composer install",
+            "Jhg\\ComposerCiTools\\PhpCpd::report",
             "Jhg\\ComposerCiTools\\PhpCs::report"
         ]
     }
