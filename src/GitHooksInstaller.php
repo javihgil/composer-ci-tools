@@ -113,6 +113,28 @@ class GitHooksInstaller extends AbstractScriptHandler
      * @throws GitHookAlreadyExistsException
      * @throws GitRepositoryMissingException
      */
+    public static function preparePush(Event $event)
+    {
+        self::installHook('prepare-push');
+    }
+
+    /**
+     * @param Event $event
+     *
+     * @throws GitHookAlreadyExistsException
+     * @throws GitRepositoryMissingException
+     */
+    public static function prepareRebase(Event $event)
+    {
+        self::installHook('prepare-rebase');
+    }
+
+    /**
+     * @param Event $event
+     *
+     * @throws GitHookAlreadyExistsException
+     * @throws GitRepositoryMissingException
+     */
     public static function prePush(Event $event)
     {
         self::installHook('pre-push');
