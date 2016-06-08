@@ -198,13 +198,27 @@ class Lint extends AbstractScriptHandler
 
         foreach ($includes as $include) {
             if ($lazy && is_dir('.git')) {
-                $process = new Process('git diff-tree --no-commit-id --name-only --diff-filter=ACMRTUXB -r HEAD | grep '.trim($extension, '*').' --color=never | xargs --no-run-if-empty -n1 -P8 '.$command);
+                // last commit = git diff-tree --no-commit-id --name-only --diff-filter=ACMRTUXB -r HEAD
+                $processCount = new Process('git diff --name-only HEAD | grep '.trim($extension, '*').' --color=never | wc -l');
+                $process = new Process('git diff --name-only HEAD | grep '.trim($extension, '*').' --color=never | xargs --no-run-if-empty -n1 -P8 '.$command);
             } else {
                 if ($lazy) {
                     self::warning('Lazy lints are only for git repositories', $event);
                 }
 
+                $processCount = new Process('find '.$include.' -name \''.$extension.'\' '.implode(' ', $excludeParams).' | wc -l');
                 $process = new Process('find '.$include.' -name \''.$extension.'\' '.implode(' ', $excludeParams).' -print0 | xargs --no-run-if-empty -0 -n1 -P8 '.$command);
+            }
+
+            self::writeDebug('Running command: '.$process->getCommandLine(), $event);
+
+            $processCount->run();
+            $changedFiles = (int) $processCount->getOutput();
+
+            if (!$changedFiles) {
+                self::warning('No files to lint', $event);
+
+                return;
             }
 
             $process->mustRun(function ($type, $buffer) use ($event, $bufferPrepend) {

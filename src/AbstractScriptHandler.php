@@ -2,6 +2,7 @@
 
 namespace Jhg\ComposerCiTools;
 
+use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -100,6 +101,28 @@ abstract class AbstractScriptHandler
                 $event->getIO()->write(sprintf(self::getOption('log-format', $event), $bufferPrepend.$buffer));
             }
         }
+    }
+
+    /**
+     * Write a debug message without format.
+     *
+     * @param string $message
+     * @param Event  $event
+     */
+    protected static function writeDebug($message, Event $event)
+    {
+        $event->getIO()->write($message, true, IOInterface::DEBUG);
+    }
+
+    /**
+     * Write a message without format.
+     *
+     * @param string $message
+     * @param Event  $event
+     */
+    protected static function write($message, Event $event, $verbosity = IOInterface::NORMAL)
+    {
+        $event->getIO()->write($message, true, $verbosity);
     }
 
     /**
