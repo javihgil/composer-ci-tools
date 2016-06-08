@@ -50,9 +50,9 @@ This is an example composer.json:
 ## Reference
 
 - [Global configuration](docs/01-global-configuration.md)
-- [Git Hooks Installer](docs/02-git-hooks-installer.md)
-- [SecurityChecker](docs/03-security-checker.md)
-- [Create custom script](docs/11-create-custom-script.md)
+- [Git Hooks Installer](docs/10-git-hooks-installer.md)
+- [SecurityChecker](docs/11-security-checker.md)
+- [Create custom script](docs/30-create-custom-script.md)
 
 ## Note for Windows users
 

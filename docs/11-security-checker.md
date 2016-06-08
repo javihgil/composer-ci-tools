@@ -24,7 +24,7 @@ If you want to use a project installation (recommended option) you must require 
 
 **checker-bin**
 
-The bin file. Also you can specify a command in your $PATH.
+The bin file.
 
 Default value: "security-checker" in your vendor-bin path.
 
@@ -33,6 +33,18 @@ Default value: "security-checker" in your vendor-bin path.
             "ci-tools": {
                 "security-checker": {
                     "checker-bin": "~/.composer/vendor/bin/security-checker"
+                }
+            }
+        }
+    }
+
+Also you can specify a command in your $PATH.
+
+    {
+        "extra": {
+            "ci-tools": {
+                "security-checker": {
+                    "checker-bin": "security-checker"
                 }
             }
         }
