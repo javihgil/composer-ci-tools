@@ -1,0 +1,36 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Jhg\\ComposerCiTools\\": "../../../../src"
+        }
+    },
+    "require": {
+        "symfony/process": "~2.3|~3.0",
+        "symfony/filesystem": "~2.3|~3.0",
+        "symfony/options-resolver": "~2.3|~3.0"
+    },
+    "extra": {
+        "ci-tools": {
+            "gulp": {
+                "bin": "php gulp-mock-script.php",
+                "tasks": {
+                    "test1": {
+                        "command": "gulp:test1",
+                        "params": "--param1=1 --param2=2 --option1",
+                        "fail-on-error": true
+                    }
+                }
+            }
+        }
+    },
+    "scripts": {
+        "gulp-test1": [
+            "Jhg\\ComposerCiTools\\Gulp::test1"
+        ],
+        "gulp-missing-task": [
+            "Jhg\\ComposerCiTools\\Gulp::invalidTask"
+        ]
+    }
+}

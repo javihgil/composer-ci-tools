@@ -26,22 +26,24 @@
         "symfony/finder": "~2.3|~3.0",
         "mockery/mockery": "~0.9",
         "phpunit/phpunit": "4.8.*",
-        "sensiolabs/security-checker": "~3.0",
         "asm89/twig-lint": "dev-master",
+        "sensiolabs/security-checker": "~3.0",
         "hexmedia/yaml-linter": "0.1",
+        "sebastian/phpcpd": "2.0.*",
         "squizlabs/PHP_CodeSniffer": "~2.0",
         "leaphub/phpcs-symfony2-standard": "~2.0",
-        "fabpot/php-cs-fixer": "~1.9",
-        "sebastian/phpcpd": "2.0.*"
+        "fabpot/php-cs-fixer": "~1.9"
     },
     "suggest": {
-        "sensiolabs/security-checker" : "Check for reported vulnerabilities in project dependencies",
+        "symfony/finder": "Install symfony/finder to use this scripts in Windows platforms",
+        "phpunit/phpunit": "Use a specific local version of phpunit",
         "hexmedia/yaml-linter": "Yaml lint for no symfony projects",
         "asm89/twig-lint": "Twig lint for no symfony projects",
+        "sensiolabs/security-checker" : "Check for reported vulnerabilities in project dependencies",
+        "sebastian/phpcpd" : "Copy paste detector",
         "squizlabs/PHP_CodeSniffer" : "Code style checks",
         "leaphub/phpcs-symfony2-standard" : "Symfony2 standard for PHP_CodeSniffer",
-        "fabpot/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/",
-        "sebastian/phpcpd" : "Copy paste detector"
+        "fabpot/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/"
     },
     "config": {
         "process-timeout": 0,
@@ -58,6 +60,17 @@
                 "standard": "vendor/leaphub/phpcs-symfony2-standard/leaphub/phpcs/Symfony2/",
                 "exclude": ["vendor", "target"]
             },
+            "phpunit": {
+                "bin": "php -d memory_limit=-1 vendor/bin/phpunit",
+                "tasks": {
+                    "test": {
+                        "config": "phpunit.xml"
+                    },
+                    "report": {
+                        "config": "phpunit-reports.xml"
+                    }
+                }
+            },
             "git": {
                 "commit-msg-regex": "/^[a-z\\s\\-0-9\\.]{20,}$/i",
                 "commit-msg-error": "The commit message must be at least 20 characters long"
@@ -67,6 +80,7 @@
     "scripts": {
         "post-install-cmd": [
             "Jhg\\ComposerCiTools\\GitHooksInstaller::preCommit",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::prePush",
             "Jhg\\ComposerCiTools\\GitHooksInstaller::commitMsg"
         ],
         "pre-commit-hook": [
@@ -74,18 +88,37 @@
             "Jhg\\ComposerCiTools\\PhpCsFixer::fix",
             "Jhg\\ComposerCiTools\\Git::addAll",
             "Jhg\\ComposerCiTools\\Lint::phpLazy",
-            "Jhg\\ComposerCiTools\\SecurityChecker::check"
+            "Jhg\\ComposerCiTools\\Lint::yamlLazy",
+            "Jhg\\ComposerCiTools\\Lint::twigLazy",
+            "Jhg\\ComposerCiTools\\SecurityChecker::check",
+            "Jhg\\ComposerCiTools\\PhpUnit::test"
+        ],
+        "pre-push-hook": [
+            "Jhg\\ComposerCiTools\\Lint::php",
+            "Jhg\\ComposerCiTools\\Lint::yaml",
+            "Jhg\\ComposerCiTools\\Lint::twig",
+            "Jhg\\ComposerCiTools\\SecurityChecker::check",
+            "Jhg\\ComposerCiTools\\PhpUnit::test"
         ],
         "commit-msg-hook": [
             "Jhg\\ComposerCiTools\\Git::commitMsgRegex"
         ],
+        "clear": [
+            "rm target -Rf"
+        ],
         "test": [
             "@composer validate",
+            "@composer install --ansi --no-progress",
             "Jhg\\ComposerCiTools\\Lint::php",
+            "Jhg\\ComposerCiTools\\Lint::yaml",
+            "Jhg\\ComposerCiTools\\Lint::twig",
+            "Jhg\\ComposerCiTools\\PhpUnit::test",
             "Jhg\\ComposerCiTools\\SecurityChecker::check"
         ],
         "report": [
-            "@composer install",
+            "@clear",
+            "@composer install --ansi --no-progress",
+            "Jhg\\ComposerCiTools\\PhpUnit::report",
             "Jhg\\ComposerCiTools\\PhpCpd::report",
             "Jhg\\ComposerCiTools\\PhpCs::report"
         ]

@@ -1,0 +1,29 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Jhg\\ComposerCiTools\\": "COMPOSER_CI_TOOLS_SRC_PATH"
+        }
+    },
+    "require": {
+        "symfony/process": "~2.3|~3.0",
+        "symfony/filesystem": "~2.3|~3.0",
+        "symfony/options-resolver": "~2.3|~3.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::applyPatchMsg",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::commitMsg",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::postUpdate",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::preApplyPatch",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::preCommit",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::prepareCommit",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::preparePush",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::prepareRebase",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::prePush",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::preRebase",
+            "Jhg\\ComposerCiTools\\GitHooksInstaller::update"
+        ]
+    }
+}
