@@ -61,7 +61,7 @@ class PhpUnit extends AbstractScriptHandler
             $command[] = '-c '.$config['config'];
         }
 
-        $process = new Process(implode(' ', $command));
+        $process = new Process(implode(' ', $command), null, null, null, null, []);
 
         $process->mustRun(function ($type, $buffer) use ($event, $logPrepend) {
             self::writeProcessBuffer($type, $buffer, $event, $logPrepend);
