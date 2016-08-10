@@ -32,7 +32,7 @@
         "sebastian/phpcpd": "2.0.*",
         "squizlabs/PHP_CodeSniffer": "~2.0",
         "leaphub/phpcs-symfony2-standard": "~2.0",
-        "fabpot/php-cs-fixer": "~1.9"
+        "friendsofphp/php-cs-fixer": "~1.12"
     },
     "suggest": {
         "symfony/finder": "Install symfony/finder to use this scripts in Windows platforms",
@@ -43,7 +43,7 @@
         "sebastian/phpcpd" : "Copy paste detector",
         "squizlabs/PHP_CodeSniffer" : "Code style checks",
         "leaphub/phpcs-symfony2-standard" : "Symfony2 standard for PHP_CodeSniffer",
-        "fabpot/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/"
+        "friendsofphp/php-cs-fixer" : "Fix Code Style. More info in http://cs.sensiolabs.org/"
     },
     "config": {
         "process-timeout": 0,

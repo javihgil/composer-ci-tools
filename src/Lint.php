@@ -199,8 +199,8 @@ class Lint extends AbstractScriptHandler
         foreach ($includes as $include) {
             if ($lazy && is_dir('.git')) {
                 // last commit = git diff-tree --no-commit-id --name-only --diff-filter=ACMRTUXB -r HEAD
-                $processCount = new Process('git diff --name-only HEAD | grep '.trim($extension, '*').' --color=never | wc -l');
-                $process = new Process('git diff --name-only HEAD | grep '.trim($extension, '*').' --color=never | xargs --no-run-if-empty -n1 -P8 '.$command);
+                $processCount = new Process('git diff --name-only --diff-filter=ACMRTUXB HEAD | grep '.trim($extension, '*').' --color=never | wc -l');
+                $process = new Process('git diff --name-only --diff-filter=ACMRTUXB HEAD | grep '.trim($extension, '*').' --color=never | xargs --no-run-if-empty -n1 -P8 '.$command);
             } else {
                 if ($lazy) {
                     self::warning('Lazy lints are only for git repositories', $event);
